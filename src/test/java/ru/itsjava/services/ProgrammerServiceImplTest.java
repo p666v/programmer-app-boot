@@ -9,6 +9,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.itsjava.domain.Notebook;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -17,10 +21,18 @@ public class ProgrammerServiceImplTest {
     @Autowired
     private ProgrammerService programmerService;
 
-    @DisplayName("корректный метод Привет - программист")
+    @DisplayName(" корректный метод Привет-программист")
     @Test
-    public void shouldHaveCorrectSeyHiToNewProgrammer() {
+    public void shouldHaveCorrectSayHiToNewProgrammer() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
         programmerService.hiToNewProgrammer();
+
+        assertEquals("Enter your name: \r\n" +
+                "Hello vitalii\r\n" +
+                "Your computer: Notebook{Asus 115AF 2018}\r\n", out.toString());
+
+
     }
 
     @Configuration
